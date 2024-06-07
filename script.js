@@ -1,10 +1,10 @@
 const webcamVideo = document.querySelector("#webcamVideo");
 const enableWebcamButton = document.querySelector("#enableWebcamButton");
+import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
+console.log(FaceLandmarker);
 
 async function createFaceLandmarker({
   numFaces,
-  FaceLandmarker,
-  FilesetResolver,
 }) {
   const filesetResolver = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
@@ -49,16 +49,8 @@ function wireUpWebcamButton() {
   }
 }
 
-import(
-  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js"
-).then((module) => {
-  main({ ...module });
-});
-
-wireUpWebcamButton();
-
-async function main({ FaceLandmarker, FilesetResolver }) {
-  
+async function main() {
+  wireUpWebcamButton();
   console.log("hi");
   console.log(FaceLandmarker);
 
@@ -69,3 +61,5 @@ async function main({ FaceLandmarker, FilesetResolver }) {
   });
   console.log(`landmarker: ${landmarker}`);
 }
+
+main();
