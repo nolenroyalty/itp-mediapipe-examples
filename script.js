@@ -1,7 +1,9 @@
 const webcamVideo = document.querySelector("#webcamVideo");
 const enableWebcamButton = document.querySelector("#enableWebcamButton");
+import { log } from "./utilities.js";
 import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
 console.log(FaceLandmarker);
+log();
 
 async function createFaceLandmarker({
   numFaces,
