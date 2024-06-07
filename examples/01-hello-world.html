@@ -1,3 +1,23 @@
-<html>
-    hello world
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="/utilities.js" type="module"></script>
+    <script src="/boilerplate.js" type="module"></script>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <script src="./01-app.js" type="module" defer></script>
+    <div class="wrapper">
+      <button id="enableWebcamButton">enable webcam</button>
+      <a id="backLink" href="/index.html">back</a>
+    </div>
+    <video
+      class="transparent fill-most-of-page"
+      id="webcamVideo"
+      autoplay
+      playsinline
+      muted
+    ></video>
+    <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
+  </body>
 </html>

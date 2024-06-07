@@ -1,13 +1,14 @@
 const webcamVideo = document.querySelector("#webcamVideo");
 const enableWebcamButton = document.querySelector("#enableWebcamButton");
 import { log } from "./utilities.js";
-import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
+import {
+  FaceLandmarker,
+  FilesetResolver,
+} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
 console.log(FaceLandmarker);
 log();
 
-async function createFaceLandmarker({
-  numFaces,
-}) {
+async function createFaceLandmarker({ numFaces }) {
   const filesetResolver = await FilesetResolver.forVisionTasks(
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
   );
@@ -29,12 +30,11 @@ async function createFaceLandmarker({
 }
 
 function enableCam() {
-  console.log("hi");
   navigator.mediaDevices
     .getUserMedia({ video: true })
     .then(function (stream) {
       webcamVideo.srcObject = stream;
-      console.log("enabled");
+      console.log("enabled webcam");
     })
     .catch((err) => {
       console.error(err);
