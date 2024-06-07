@@ -4,10 +4,7 @@
 
 // Print a message in the browser's dev tools console each time the page loads
 // Use your menus or right-click / control-click and choose "Inspect" > "Console"
-import vision from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-
-const { FaceLandmarker, FaceDetector, FilesetResolver, DrawingUtils, } = vision;
-
+console.log(window.vision);
 
 console.log("Hello 🌎");
 
