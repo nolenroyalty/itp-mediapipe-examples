@@ -26,6 +26,10 @@ to this section's matching END comment to see page-specific styles.
   --font-family-header: "HK Grotesk";
 }
 
+#webcamVideo {
+  background-color: red;
+}
+
 /* Basic page style resets */
 * {
   box-sizing: border-box;
@@ -192,4 +196,4 @@ h2 {
 }
 .fileopener:hover {
   border-bottom:3px solid var(--color-secondary);
-}
+} 
