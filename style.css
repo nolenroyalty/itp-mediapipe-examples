@@ -74,7 +74,7 @@ body {
   left: 10%;
   width: 80%;
   top: 10%;
-  height: 80%;
+  max-height: 80%;
   object-fit: cover;
 }
 
@@ -100,7 +100,6 @@ body {
   transform: translateX(-50%);
 }
 
-/* Button - Add it from the README instructions */
 button,
 input {
   font-family: inherit;
@@ -111,4 +110,49 @@ input {
   border-radius: 4px;
   padding: 0.5rem 1rem;
   transition: 500ms;
+}
+
+.debug-container {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  z-index: 1;
+  display: grid;
+  gap: 4px;
+  grid-template-columns: auto auto;
+  background-color: white;
+  transition: opacity 0.5s ease;
+}
+
+.debug-label {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 4px;
+  height: 16px;
+}
+
+.debug-value {
+  display: flex;
+  position: relative;
+  height: 16px;
+  align-items: center;
+  z-index: 1;
+  width: 100px;
+}
+
+.debug-value-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: calc(var(--score) * 100%);
+  background-color: #007f8b;
+}
+
+.debug-value-text {
+  /* this is dumb and i'm doing it so that the text is on top of the bar,
+  it's a bad way to do it but it's 1:25 AM on Friday */
+  position: relative;
+  z-index: 2;
 }
