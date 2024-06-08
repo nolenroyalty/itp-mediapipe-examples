@@ -103,6 +103,7 @@ body {
 #navLinks {
   position: absolute;
   top: 90%;
+  padding-top: 0.5rem;
   width: 100%;
   display: flex;
   justify-content: center;

@@ -15,8 +15,6 @@ const eatableText = document.querySelector("#eatableText");
 const JAW_OPEN_THRESHOLD = 0.45;
 const JAW_CLOSED_THRESHOLD = 0.15;
 let jawState = "closed";
-// Fun example of this problem: https://x.com/itseieio/status/1795192413847199938
-// See https://en.wikipedia.org/wiki/Hysteresis for more
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
@@ -36,6 +34,8 @@ function DEBUG_jawState() {
   });
 }
 
+// Fun example of this problem: https://x.com/itseieio/status/1795192413847199938
+// See https://en.wikipedia.org/wiki/Hysteresis for more
 function updateJawState({ jawOpenScore }) {
   if (jawState === "open") {
     // If our jaw is open, wait for our score to be low to flip back
