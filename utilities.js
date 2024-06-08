@@ -79,4 +79,8 @@ export function addDebugValue({
 
 export function removeDebugValue(key) {
   delete DEBUG_VALUES[key];
+  const labelEl = document.querySelector(`[data-label="${key}"]`);
+  const valueEl = document.querySelector(`[data-value-for-label="${key}"]`);
+  labelEl && labelEl.remove();
+  valueEl && valueEl.remove();
 }

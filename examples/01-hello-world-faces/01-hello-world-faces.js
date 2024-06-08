@@ -2,8 +2,8 @@ import {
   drawFaceLandmarks,
   clearCanvasAndAlignSizeWithVideo,
   runForeverOnceWebcamIsEnabled,
-} from "../boilerplate.js";
-import { enableDebugShortcut, addDebugValue } from "../utilities.js";
+} from "../../boilerplate.js";
+import { enableDebugShortcut, addDebugValue } from "../../utilities.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
@@ -12,6 +12,8 @@ const drawingCanvas = document.querySelector("#drawingCanvas");
 enableDebugShortcut();
 
 // add all of the 'blendshapes" (think of them as facial expressions) to the debug panel
+// There are too many face landmarks (hundreds!) to display them in the debug menu, but
+// you can find them all in this picture: https://storage.googleapis.com/mediapipe-assets/documentation/mediapipe_face_landmark_fullsize.png
 function DEBUG_blendshapeValues(blendShapes) {
   if (!blendShapes.length) {
     return;

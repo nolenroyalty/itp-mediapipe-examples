@@ -1,5 +1,6 @@
 import {
   FaceLandmarker,
+  HandLandmarker,
   FilesetResolver,
   DrawingUtils,
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
@@ -13,20 +14,40 @@ export async function createFaceLandmarker({
     "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
   );
 
-  async function getLandmarker() {
-    return FaceLandmarker.createFromOptions(filesetResolver, {
-      baseOptions: {
-        modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
-        delegate: "GPU",
-      },
-      outputFaceBlendshapes: true,
-      runningMode: "VIDEO",
-      numFaces: numFaces,
-      minFaceDetectionConfidence,
-      minTrackingConfidence,
-    });
-  }
-  return getLandmarker();
+  return FaceLandmarker.createFromOptions(filesetResolver, {
+    baseOptions: {
+      modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
+      delegate: "GPU",
+    },
+    outputFaceBlendshapes: true,
+    runningMode: "VIDEO",
+    numFaces: numFaces,
+    minFaceDetectionConfidence,
+    minTrackingConfidence,
+  });
+}
+
+export async function createHandLandmarker({
+  minHandPresenceConfidence = 0.6,
+  minDetectionConfidence = 0.6,
+  minTrackingConfidence = 0.6,
+  numHands = 2,
+} = {}) {
+  const vision = await FilesetResolver.forVisionTasks(
+    "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
+  );
+  const handLandmarker = await HandLandmarker.createFromOptions(vision, {
+    baseOptions: {
+      modelAssetPath: `https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task`,
+      delegate: "GPU",
+    },
+    runningMode: "VIDEO",
+    numHands,
+    minHandPresenceConfidence,
+    minDetectionConfidence,
+    minTrackingConfidence,
+  });
+  return handLandmarker;
 }
 
 export function enableCam({ webcamVideo, enableWebcamButton, runOnStart }) {
@@ -39,7 +60,8 @@ export function enableCam({ webcamVideo, enableWebcamButton, runOnStart }) {
       enableWebcamButton.classList.add("webcam-btn-success");
       webcamVideo.classList.remove("transparent");
       console.log("enabled webcam");
-      runOnStart();
+      //trigger the runOnStart function on loading data
+      webcamVideo.onloadeddata = () => runOnStart();
     })
     .catch((err) => {
       console.error(err);
@@ -70,6 +92,38 @@ function invertFaceLandmarks({ faceLandmarkResults }) {
   return copiedAndInverted;
 }
 
+// Similar to invertFaceLandmarks, we need to invert the hand landmarks because
+// we're inverting the video feed
+// Additionally, Mediapipe sometimes offers multiple guesses for where a hand is;
+// we only want the best one.
+// NOTE: this code will prevent your code from working with multiple pairs of hands!!
+function selectBestLandmarksForEachHand(results) {
+  const bestLandmarksByLabel = {};
+  results.handednesses.forEach((handednessOuter, index) => {
+    handednessOuter.forEach((handednessInner) => {
+      const label = handednessInner.categoryName;
+
+      if (
+        !bestLandmarksByLabel[label] ||
+        handednessInner.score > bestLandmarksByLabel[label].score
+      ) {
+        bestLandmarksByLabel[label] = {
+          score: handednessInner.score,
+          landmarks: results.landmarks[index],
+        };
+      }
+    });
+  });
+
+  return Object.keys(bestLandmarksByLabel).map((label) => {
+    const landmarks = bestLandmarksByLabel[label].landmarks.map((landmark) => {
+      return { x: 1 - landmark.x, y: landmark.y, z: landmark.z };
+    });
+    label = label === "Right" ? "Left" : "Right";
+    return { label, landmarks };
+  });
+}
+
 async function animationFrameLoop({
   requestFaceLandmarks,
   requestHandLandmarks,
@@ -77,6 +131,7 @@ async function animationFrameLoop({
   webcamVideo,
 }) {
   const faceLandmarker = await createFaceLandmarker();
+  const handLandmarker = await createHandLandmarker();
   let lastVideoTime = -1;
   const loop = (time) => {
     const startTimeMs = performance.now();
@@ -91,7 +146,16 @@ async function animationFrameLoop({
           faceLandmarkResults: faceLandmarkResults,
         });
       }
-      runEveryFrame({ time, faceLandmarkResults });
+      let handLandmarkResults;
+      if (requestHandLandmarks) {
+        handLandmarkResults = handLandmarker.detectForVideo(
+          webcamVideo,
+          startTimeMs
+        );
+        handLandmarkResults =
+          selectBestLandmarksForEachHand(handLandmarkResults);
+      }
+      runEveryFrame({ time, faceLandmarkResults, handLandmarkResults });
       lastVideoTime = webcamVideo.currentTime;
     }
     requestAnimationFrame(loop);
@@ -105,6 +169,7 @@ export function runForeverOnceWebcamIsEnabled({
   requestHandLandmarks,
   doThingsWithLandmarks: runEveryFrame,
   enableWebcamButton,
+  runOnce = null,
 } = {}) {
   if (!enableWebcamButton) {
     enableWebcamButton = document.querySelector("#enableWebcamButton");
@@ -112,6 +177,9 @@ export function runForeverOnceWebcamIsEnabled({
   const hasGetUserMedia = () => !!navigator.mediaDevices?.getUserMedia;
   if (hasGetUserMedia()) {
     const runOnStart = () => {
+      if (runOnce) {
+        runOnce();
+      }
       animationFrameLoop({
         requestFaceLandmarks,
         requestHandLandmarks,
@@ -130,6 +198,17 @@ export function runForeverOnceWebcamIsEnabled({
 export function clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas }) {
   canvas.width = webcamVideo.videoWidth;
   canvas.height = webcamVideo.videoHeight;
+}
+
+export function drawHandLandmarks({ results, canvas }) {
+  const ctx = canvas.getContext("2d");
+  results.forEach(({ landmarks, whichHand }) => {
+    drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
+      color: "#00FF00",
+      lineWidth: 5,
+    });
+    drawLandmarks(ctx, landmarks, { color: "#FF0000", lineWidth: 1 });
+  });
 }
 
 export function drawFaceLandmarks({ results, canvas = null }) {
