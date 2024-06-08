@@ -25,12 +25,21 @@ function DEBUG_smileValue({ label, value }) {
   });
 }
 
-function floatBalloon({ smileScore }) {
+function floatBalloonNaively({ smileScore }) {
   const windowHeight = window.innerHeight;
   const balloonHeightPercent = 0.4;
   const maxRaise = windowHeight * (1 - balloonHeightPercent);
   const raiseBaloonBy = maxRaise * smileScore;
   balloon.style.transform = `translateY(-${raiseBaloonBy}px)`;
+}
+
+let prevSmileScore = 0;
+function floatBalloonSmoothly({ smileScore }) {
+  const smoothingFactor = 0.075;
+  const newSmileScore =
+    prevSmileScore * (1 - smoothingFactor) + smileScore * smoothingFactor;
+  floatBalloonNaively({ smileScore: newSmileScore });
+  prevSmileScore = newSmileScore;
 }
 
 function doThingsWithLandmarks({ time, faceLandmarkResults }) {
@@ -44,7 +53,7 @@ function doThingsWithLandmarks({ time, faceLandmarkResults }) {
       label: "mouthSmileRight",
     });
     const averageSmileScore = (leftSmileScore + rightSmileScore) / 2;
-    floatBalloon({ smileScore: averageSmileScore });
+    floatBalloonNaively({ smileScore: averageSmileScore });
     DEBUG_smileValue({ label: "Left smile", value: leftSmileScore });
     DEBUG_smileValue({ label: "Right smile", value: rightSmileScore });
     DEBUG_smileValue({ label: "Avg smile", value: averageSmileScore });
