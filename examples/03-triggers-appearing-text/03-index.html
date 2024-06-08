@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="/utilities.js" type="module"></script>
+    <script src="/boilerplate.js" type="module"></script>
+    <link rel="stylesheet" href="/style.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <script src="./03-triggers-appearing-text.js" type="module" defer></script>
+    <div class="wrapper">
+      <div class="debug-container transparent"></div>
+      <button id="enableWebcamButton">enable webcam</button>
+      <h1
+        id="appearingText"
+        class="transparent"
+        ;
+        style="
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 3rem;
+          z-index: 1;
+          background-color: slategrey;
+        "
+      >
+        You can't see this
+      </h1>
+    </div>
+    <video
+      class="transparent fill-most-of-page"
+      id="webcamVideo"
+      autoplay
+      playsinline
+      muted
+    ></video>
+    <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
+    <a id="backLink" href="/index.html">back</a>
+  </body>
+</html>

@@ -2,8 +2,18 @@ export let DEBUG = false;
 const debugContainer = document.querySelector(".debug-container");
 let DEBUG_VALUES = {};
 
-export function log() {
-  console.log("hello world");
+export function extractFacialBlendshape({ faceLandmarkResults, label }) {
+  if (
+    !faceLandmarkResults ||
+    !faceLandmarkResults.faceBlendshapes ||
+    faceLandmarkResults.faceBlendshapes.length === 0
+  ) {
+    return null;
+  }
+
+  return faceLandmarkResults.faceBlendshapes[0].categories.find(
+    (shape) => shape.displayName === label || shape.categoryName === label
+  )?.score;
 }
 
 export function enableDebugShortcut() {

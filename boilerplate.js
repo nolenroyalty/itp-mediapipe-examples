@@ -212,7 +212,11 @@ export function drawHandLandmarks({ results, canvas }) {
 }
 
 export function drawFaceLandmarks({ results, canvas = null }) {
-  if (!results || !results.faceLandmarks) {
+  if (
+    !results ||
+    !results.faceLandmarks ||
+    results.faceLandmarks.length === 0
+  ) {
     return;
   }
   if (!canvas) {
