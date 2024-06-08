@@ -11,6 +11,7 @@ import {
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
 const appearingText = document.querySelector("#appearingText");
+const waterPot = document.querySelector("#waterPot");
 
 // Properly calibrating this number is hard; faces are very different!
 // This is a good starting point for the workshop, but you should think carefully
@@ -47,6 +48,14 @@ function hideOrShowText({ isBlinking }) {
   }
 }
 
+function maybeBoil({ isBlinking }) {
+  if (isBlinking) {
+    waterPot.src = "/assets/images/water-boiling.jpeg";
+  } else {
+    waterPot.src = "/assets/images/water-still.jpeg";
+  }
+}
+
 function doThingsWithLandmarks({ time, faceLandmarkResults }) {
   if (faceLandmarkResults && faceLandmarkResults.faceLandmarks) {
     const blinkLeft = extractFacialBlendshape({
@@ -60,7 +69,8 @@ function doThingsWithLandmarks({ time, faceLandmarkResults }) {
     const isBlinkingLeft = determineIsBlinking(blinkLeft);
     const isBlinkingRight = determineIsBlinking(blinkRight);
     const isBlinkingBoth = isBlinkingLeft && isBlinkingRight;
-    hideOrShowText({ isBlinking: isBlinkingBoth });
+    // hideOrShowText({ isBlinking: isBlinkingBoth });
+    maybeBoil({ isBlinking: isBlinkingBoth });
 
     DEBUG_blinkValue({ leftOrRight: "Left", value: blinkLeft });
     DEBUG_blinkValue({ leftOrRight: "Right", value: blinkRight });
