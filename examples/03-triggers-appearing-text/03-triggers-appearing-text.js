@@ -10,13 +10,12 @@ import {
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
-const appearingText = document.querySelector("#appearingText");
 const waterPot = document.querySelector("#waterPot");
 
 // Properly calibrating this number is hard; faces are very different!
 // This is a good starting point for the workshop, but you should think carefully
 // about this is and do lots of testing if you're launching something into the world!
-const BLINK_THREHSOLD = 0.35;
+const EYES_CLOSED_THRESHOLD = 0.45;
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
@@ -29,54 +28,49 @@ function DEBUG_blinkValue({ leftOrRight, value }) {
   });
 }
 
-function DEBUG_blinking({ leftOrRight, isBlinking }) {
+function DEBUG_eyesClosed({ leftOrRight, eyesClosed }) {
   addDebugValue({
-    label: `${leftOrRight} blinking`,
-    value: isBlinking ? "yes" : "no",
+    label: `${leftOrRight} closed?`,
+    value: eyesClosed ? "yes" : "no",
   });
 }
 
-function determineIsBlinking(value) {
-  return value > BLINK_THREHSOLD;
+function eyeIsClosed(value) {
+  return value > EYES_CLOSED_THRESHOLD;
 }
 
-function hideOrShowText({ isBlinking }) {
-  if (isBlinking) {
-    appearingText.classList.remove("transparent");
-  } else {
-    appearingText.classList.add("transparent");
+let hasClosedEyes = false;
+function maybeBoil({ eyesClosed }) {
+  if (hasClosedEyes) {
+    return;
   }
-}
 
-function maybeBoil({ isBlinking }) {
-  if (isBlinking) {
+  if (eyesClosed) {
     waterPot.src = "/assets/images/water-boiling.jpeg";
-  } else {
-    waterPot.src = "/assets/images/water-still.jpeg";
+    hasClosedEyes = true;
   }
 }
 
 function doThingsWithLandmarks({ time, faceLandmarkResults }) {
   if (faceLandmarkResults && faceLandmarkResults.faceLandmarks) {
-    const blinkLeft = extractFacialBlendshape({
+    const closedLeftScore = extractFacialBlendshape({
       faceLandmarkResults,
       label: "eyeBlinkLeft",
     });
-    const blinkRight = extractFacialBlendshape({
+    const closedRightScore = extractFacialBlendshape({
       faceLandmarkResults,
       label: "eyeBlinkRight",
     });
-    const isBlinkingLeft = determineIsBlinking(blinkLeft);
-    const isBlinkingRight = determineIsBlinking(blinkRight);
-    const isBlinkingBoth = isBlinkingLeft && isBlinkingRight;
-    // hideOrShowText({ isBlinking: isBlinkingBoth });
-    maybeBoil({ isBlinking: isBlinkingBoth });
+    const eyeClosedLeft = eyeIsClosed(closedLeftScore);
+    const eyeClosedRight = eyeIsClosed(closedRightScore);
+    const eyesClosed = eyeClosedLeft && eyeClosedRight;
+    maybeBoil({ eyesClosed });
 
-    DEBUG_blinkValue({ leftOrRight: "Left", value: blinkLeft });
-    DEBUG_blinkValue({ leftOrRight: "Right", value: blinkRight });
-    DEBUG_blinking({ leftOrRight: "Left", isBlinking: isBlinkingLeft });
-    DEBUG_blinking({ leftOrRight: "Right", isBlinking: isBlinkingRight });
-    DEBUG_blinking({ leftOrRight: "Both", isBlinking: isBlinkingBoth });
+    DEBUG_blinkValue({ leftOrRight: "Left", value: closedLeftScore });
+    DEBUG_blinkValue({ leftOrRight: "Right", value: closedRightScore });
+    DEBUG_eyesClosed({ leftOrRight: "Left", eyesClosed: eyeClosedLeft });
+    DEBUG_eyesClosed({ leftOrRight: "Right", eyesClosed: eyeClosedRight });
+    DEBUG_eyesClosed({ leftOrRight: "Both", eyesClosed });
   }
 }
 
