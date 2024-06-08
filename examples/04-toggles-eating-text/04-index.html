@@ -14,25 +14,24 @@
     ></script>
   </head>
   <body>
-    <script src="./03-thresholds-watched-pot.js" type="module" defer></script>
+    <script src="./04-toggles-eating-text.js" type="module" defer></script>
     <div class="wrapper">
       <div class="debug-container transparent"></div>
       <button id="enableWebcamButton">enable webcam</button>
-      <img
-        src="/assets/images/water-still.jpeg"
-        id="waterPot"
-        alt="pot of water, unboiled"
+      <h1
+        id="eatableText"
         style="
           position: absolute;
-          left: 80%;
-          top: 50%;
-          width: 25%;
-          transform: translate(-50%, -50%);
-          font-size: 3rem;
+          left: 0;
+          top: 0;
+          width: 100%;
+          font-size: 8rem;
           z-index: 1;
-          background-color: slategrey;
+          text-align: center;
         "
-      />
+      >
+        EAT ME
+      </h1>
     </div>
     <video
       class="transparent fill-most-of-page"
@@ -43,11 +42,11 @@
     ></video>
     <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
     <div id="navLinks">
-      <a href="../02-hello-world-hands/02-index.html"
-        >prev (hello world hands)</a
+      <a href="../03-thresholds-watched-pot/03-index.html"
+        >prev (a watched pot)</a
       >
       <a href="/index.html">home</a>
-      <a href="../04-toggles-eating-text/04-index.html">next (eating text)</a>
+      <a href="./04-toggle-fix.html">next (fix the toggle)</a>
     </div>
   </body>
 </html>

@@ -22,8 +22,10 @@ export function enableDebugShortcut() {
       DEBUG = !DEBUG;
 
       if (DEBUG) {
+        console.log("Debug mode enabled");
         debugContainer.classList.remove("transparent");
       } else {
+        console.log("Debug mode disabled");
         debugContainer.classList.add("transparent");
       }
     }

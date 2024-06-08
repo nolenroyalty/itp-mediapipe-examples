@@ -202,7 +202,7 @@ export function clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas }) {
 
 export function drawHandLandmarks({ results, canvas }) {
   const ctx = canvas.getContext("2d");
-  results.forEach(({ landmarks, whichHand }) => {
+  results.forEach(({ landmarks }) => {
     drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
       color: "#00FF00",
       lineWidth: 5,

@@ -54,7 +54,7 @@ runForeverOnceWebcamIsEnabled({
   requestHandLandmarks: true,
   doThingsWithLandmarks,
   runOnce: () => {
-    // Uncomment this (and comment out the clearCanvas call above) for something trippy
+    // Uncomment the below line (and comment out the clearCanvas call above) for something trippy
     // clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas: drawingCanvas });
   },
 });
