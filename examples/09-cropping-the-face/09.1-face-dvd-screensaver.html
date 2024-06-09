@@ -14,16 +14,21 @@
     ></script>
   </head>
   <body>
-    <script src="./09-cropping-the-face.js" type="module" defer></script>
+    <script src="./09.1-face-dvd-screensaver.js" type="module" defer></script>
+    <canvas
+      id="bouncingFaceCanvas"
+      style="
+        pointer-events: none;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+      "
+      class="transparent"
+    ></canvas>
     <div class="wrapper">
       <div class="debug-container transparent"></div>
       <button id="enableWebcamButton">enable webcam</button>
-      <button
-        id="captureFaceButton"
-        style="position: absolute; top: 30%; left: 70%; z-index: 100"
-      >
-        capture face
-      </button>
     </div>
     <video
       class="transparent fill-most-of-page"
@@ -34,9 +39,8 @@
     ></video>
     <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
     <div id="navLinks">
-      <a href="../08-masking-just-hands/08-index.html">prev (just the hands)</a>
+      <a href="./09-index.html">prev (cropping the face)</a>
       <a href="/index.html">home</a>
-      <a href="./09.1-face-dvd-screensaver.html">next (face dvd screensaver)</a>
     </div>
   </body>
 </html>
