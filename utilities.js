@@ -130,6 +130,41 @@ export function getFingertip({ finger, hand, handLandmarkResults }) {
   return forHand.landmarks[tipIdx];
 }
 
+const KNUCKLE_BEFORE_TIP = {
+  thumb: 3,
+  index: 7,
+  middle: 11,
+  ring: 15,
+  pinky: 19,
+};
+
+export function getKnuckleBeforeFingerTip({
+  finger,
+  hand,
+  handLandmarkResults,
+}) {
+  if (!handLandmarkResults || handLandmarkResults.length === 0) {
+    return null;
+  }
+
+  const knuckleIdx = KNUCKLE_BEFORE_TIP[finger.toLowerCase()];
+  if (!knuckleIdx) {
+    throw new Error(`Unknown finger: ${finger}`);
+  }
+  if (hand === "left") {
+    hand = "Left";
+  }
+  if (hand === "right") {
+    hand = "Right";
+  }
+
+  const forHand = handLandmarkResults.find(({ label }) => label === hand);
+  if (!forHand) {
+    return null;
+  }
+  return forHand.landmarks[knuckleIdx];
+}
+
 // Take a position in the video feed (0 to 1) and return the actual coordinates
 // on the screen of that position. (0.5, 0.5) would be in the center of the video.
 // available in utilities.js

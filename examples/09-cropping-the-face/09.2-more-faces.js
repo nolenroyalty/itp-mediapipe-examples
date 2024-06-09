@@ -101,7 +101,7 @@ function addFaceToCanvas({ faceLandmarkResults, video, canvas }) {
   });
   const ctx = canvas.getContext("2d");
   cropToBoundingBox({ ctx, video, boundingBox });
-  canvas.getContext("2d").drawImage(canvas, 0, 0);
+  // canvas.getContext("2d").drawImage(canvas, 0, 0);
 }
 
 let initialized = false;
