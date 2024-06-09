@@ -3,5 +3,6 @@ export const blue = "#69c8f7";
 export const purple = "#8a69f7";
 export const pink = "#f769d6";
 export const yellow = "#e9f769";
+export const red = "#f76969";
 
-export default { teal, blue, purple, pink, yellow };
+export default { teal, blue, purple, pink, yellow, red };

@@ -22,8 +22,12 @@ function doThingsWithLandmarks({ handLandmarkResults }) {
   const ctx = drawingCanvas.getContext("2d");
 
   if (handLandmarkResults && handLandmarkResults.length > 0) {
+    ctx.save();
     ctx.fillStyle = colors.teal;
+    // try adjusting this down!
+    ctx.globalAlpha = 0.8;
     ctx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+    ctx.restore();
     addDebugValue({
       label: "hand count",
       value: String(handLandmarkResults.length),

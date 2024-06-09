@@ -184,6 +184,79 @@ export function getHandTracePath({ ctx, handLandmarkResults }) {
   return path;
 }
 
+function getFaceTracePath({ ctx, indices, faceLandmarkResults }) {
+  const path = new Path2D();
+  const faceLandmarks = faceLandmarkResults.faceLandmarks[0];
+  const points = indices.map((idx) => faceLandmarks[idx]);
+  quadraticCurveThroughPoints({
+    path,
+    points,
+    width: ctx.canvas.width,
+    height: ctx.canvas.height,
+  });
+  return path;
+}
+
+const MOUTH_OUTER_LANDMARKS = [
+  61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291, 375, 321, 405, 314, 17, 84,
+  181, 91, 146,
+];
+
+export function getMouthTracePath({ ctx, faceLandmarkResults }) {
+  return getFaceTracePath({
+    ctx,
+    indices: MOUTH_OUTER_LANDMARKS,
+    faceLandmarkResults,
+  });
+}
+
+// Inverted from the reference https://storage.googleapis.com/mediapipe-assets/documentation/mediapipe_face_landmark_fullsize.png
+const RIGHT_EYE_OUTER_LANDMARKS = [
+  33, 7, 163, 144, 145, 153, 154, 155, 133, 173, 157, 158, 159, 160, 161, 246,
+];
+
+export function getRightEyeTracePath({ ctx, faceLandmarkResults }) {
+  return getFaceTracePath({
+    ctx,
+    indices: RIGHT_EYE_OUTER_LANDMARKS,
+    faceLandmarkResults,
+  });
+}
+
+const LEFT_EYE_OUTER_LANDMARKS = [
+  362, 398, 384, 385, 386, 387, 388, 466, 263, 249, 390, 373, 374, 380, 381,
+];
+
+export function getLeftEyeTracePath({ ctx, faceLandmarkResults }) {
+  return getFaceTracePath({
+    ctx,
+    indices: LEFT_EYE_OUTER_LANDMARKS,
+    faceLandmarkResults,
+  });
+}
+
+const OUTER_FACE_LANDMARKS = [
+  10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 401, 361, 435, 288, 397, 365,
+  379, 378, 400, 377, 152,
+  // 438,
+  176, 149, 150, 136, 172, 58, 132, 93, 234, 127,
+
+  162, 21, 54, 103, 67, 109,
+];
+
+// 10, 338, 297, 332, 284, 251, 389, 356, 454, 323, 361, 435, 388, 397, 365, 379,
+// 378, 400, 377, 152, 148, 176, 149, 150, 136, 172, 58,
+// 132, 93, 234, 127, 162,
+// 21, 54, 103, 67, 109,
+
+export function getOuterFaceTracePath({ ctx, faceLandmarkResults }) {
+  return getFaceTracePath({
+    ctx,
+    indices: OUTER_FACE_LANDMARKS,
+    faceLandmarkResults,
+  });
+}
+
 export function maskOutPath({ ctx, path, lineWidth }) {
   ctx.save();
   ctx.lineCap = "round";
