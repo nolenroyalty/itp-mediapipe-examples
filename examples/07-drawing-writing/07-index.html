@@ -14,36 +14,10 @@
     ></script>
   </head>
   <body>
-    <script src="./06-tracking-finger-puppets.js" type="module" defer></script>
+    <script src="./07-drawing-writing.js" type="module" defer></script>
     <div class="wrapper">
       <div class="debug-container transparent"></div>
       <button id="enableWebcamButton">enable webcam</button>
-      <img
-        src="/assets/images/scooter-muppet.png"
-        id="leftFingerPuppet"
-        class="transparent"
-        style="
-          position: absolute;
-          height: 20%;
-          width: auto;
-          z-index: 1;
-          transition: opacity 0.5s;
-          pointer-events: none;
-        "
-      />
-      <img
-        src="/assets/images/beaker-muppet.png"
-        id="rightFingerPuppet"
-        class="transparent"
-        style="
-          position: absolute;
-          height: 20%;
-          width: auto;
-          z-index: 1;
-          transition: opacity 0.5s;
-          pointer-events: none;
-        "
-      />
     </div>
     <video
       class="transparent fill-most-of-page"
@@ -54,11 +28,11 @@
     ></video>
     <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
     <div id="navLinks">
-      <a href="../05-ranges-smile-balloon/05-index.html"
-        >prev (smile the balloon)</a
+      <a href="../06-tracking-finger-puppets/06-index.html"
+        >prev (finger puppets)</a
       >
       <a href="/index.html">home</a>
-      <a href="../07-drawing-writing/07-index.html">next (drawing / writing)</a>
+      <a href="./07-drawing-all-fingers.html">next (more fingers)</a>
     </div>
   </body>
 </html>
