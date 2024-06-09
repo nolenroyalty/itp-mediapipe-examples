@@ -7,6 +7,9 @@ import {
   getFingertip,
   getKnuckleBeforeFingerTip,
   addDebugValue,
+  getHandTracePath,
+  maskOutPath,
+  outlinePath,
   getFaceBoundingBox,
   cropToBoundingBox,
   moveToPositionInVideo,
@@ -47,8 +50,8 @@ function initializeFaceCanvases() {
 
 function rotateCanvasForFingerPosition({ canvas, loc, knuckleLoc }) {
   const ctx = canvas.getContext("2d");
-  let angle = Math.atan2(loc.y - knuckleLoc.y, loc.x - knuckleLoc.x);
-  angle += Math.PI / 2;
+  let angle = -Math.atan2(loc.y - knuckleLoc.y, loc.x - knuckleLoc.x);
+  angle -= Math.PI / 2;
   ctx.translate(canvas.width / 2, canvas.height / 2);
   // ctx.rotate(angle);
   canvas.style.transform = `translate(-50%, -50%) scaleX(-1) rotate(${angle}rad)`;
@@ -97,6 +100,27 @@ function hideFaceCanvases() {
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
 
+function hideCanvasExceptHands({ ctx, handLandmarkResults }) {
+  const handTracePath = getHandTracePath({ ctx, handLandmarkResults });
+  ctx.save();
+  ctx.fillStyle = colors.teal;
+  // try adjusting this!
+  ctx.globalAlpha = 1;
+  ctx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
+  ctx.restore();
+  outlinePath({
+    ctx,
+    path: handTracePath,
+    outlineColor: colors.yellow,
+    lineWidth: 60,
+  });
+  maskOutPath({
+    ctx,
+    path: handTracePath,
+    lineWidth: 40,
+  });
+}
+
 function doThingsWithLandmarks({ faceLandmarkResults, handLandmarkResults }) {
   const ctx = drawingCanvas.getContext("2d");
   const hasFaceLandmarks =
@@ -106,6 +130,7 @@ function doThingsWithLandmarks({ faceLandmarkResults, handLandmarkResults }) {
   if (hasFaceLandmarks && hasHandLandmarks) {
     const faceBoundingBox = getFaceBoundingBox({ faceLandmarkResults });
     putFaceOnHands({ faceBoundingBox, handLandmarkResults });
+    // hideCanvasExceptHands({ ctx, handLandmarkResults });
   } else {
     hideFaceCanvases();
   }
@@ -119,5 +144,10 @@ runForeverOnceWebcamIsEnabled({
   runOnce: () => {
     clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas: drawingCanvas });
     initializeFaceCanvases();
+  },
+  runBeforeProcessingVideoFrame: () => {
+    // uncomment if you want to try masking out everything but hte hands
+    // const ctx = drawingCanvas.getContext("2d");
+    // ctx.clearRect(0, 0, drawingCanvas.width, drawingCanvas.height);
   },
 });
