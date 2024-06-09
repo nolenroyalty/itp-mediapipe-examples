@@ -20,9 +20,10 @@ enableDebugShortcut();
 
 function doThingsWithLandmarks({ handLandmarkResults }) {
   const ctx = drawingCanvas.getContext("2d");
-  ctx.fillStyle = colors.teal;
-  ctx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
-  if (handLandmarkResults) {
+
+  if (handLandmarkResults && handLandmarkResults.length > 0) {
+    ctx.fillStyle = colors.teal;
+    ctx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
     addDebugValue({
       label: "hand count",
       value: String(handLandmarkResults.length),

@@ -75,8 +75,11 @@ export function enableCam({ webcamVideo, enableWebcamButton, runOnStart }) {
       enableWebcamButton.classList.add("webcam-btn-success");
       webcamVideo.classList.remove("transparent");
       console.log("enabled webcam");
-      //trigger the runOnStart function on loading data
-      webcamVideo.onloadeddata = () => runOnStart();
+      const loadedData = () => {
+        runOnStart();
+        webcamVideo.removeEventListener("loadeddata", loadedData);
+      };
+      webcamVideo.addEventListener("loadeddata", loadedData);
     })
     .catch((err) => {
       console.error(err);
