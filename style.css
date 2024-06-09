@@ -7,6 +7,13 @@
   --image-margin: 3rem;
   --font-family: "HK Grotesk";
   --font-family-header: "HK Grotesk";
+
+  --color-teal: #69f7be;
+  --color-blue: #69c8f7;
+  --color-purple: #8a69f7;
+  --color-pink: #f769d6;
+  --color-yellow: #e9f769;
+  --color-red: #f76969;
 }
 
 * {
@@ -112,7 +119,8 @@ input {
   box-sizing: border-box;
   border-radius: 4px;
   padding: 0.5rem 1rem;
-  transition: 500ms;
+  transition: opacity 500ms ease;
+  z-index: 2;
 }
 
 .debug-container {
@@ -175,4 +183,21 @@ img {
 
 div {
   margin: 0;
+}
+
+.touchable-button {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 0;
+  top: 0;
+  background-color: var(--color-blue);
+  color: var(--color-text-main);
+  padding: 24px;
+  font-size: 3rem;
+  transition: transform 0.1s ease;
+}
+
+.btn-touched {
+  background-color: var(--color-yellow);
+  transform: translate(-50%, -50%) scale(1.1);
 }

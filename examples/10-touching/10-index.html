@@ -14,10 +14,27 @@
     ></script>
   </head>
   <body>
-    <script src="./09.2-more-faces.js" type="module" defer></script>
+    <script src="./10-touchable-button.js" type="module" defer></script>
     <div class="wrapper">
       <div class="debug-container transparent"></div>
       <button id="enableWebcamButton">enable webcam</button>
+      <button id="touchableButton" class="touchable-button transparent">
+        touch me
+      </button>
+      <h1
+        id="touchingText"
+        style="
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          font-size: 6rem;
+          z-index: 1;
+          text-align: center;
+        "
+      >
+        Not touching
+      </h1>
     </div>
     <video
       class="transparent fill-most-of-page"
@@ -28,9 +45,8 @@
     ></video>
     <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
     <div id="navLinks">
-      <a href="./09.1-face-dvd-screensaver.html">prev (face dvd screensaver)</a>
+      <a href="./09.2-more-faces.html">prev (many faces)</a>
       <a href="/index.html">home</a>
-      <a href="../10-touching/10-index.html">next (touchable button)</a>
     </div>
   </body>
 </html>
