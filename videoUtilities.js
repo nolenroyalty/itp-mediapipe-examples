@@ -1,5 +1,3 @@
-import { addDebugValue } from "./utilities.js";
-
 let VIDEO_BOUNDING_RECT = null;
 let ASPECT_RATIO = null;
 let xOffset = 0;
@@ -26,7 +24,6 @@ export function setVideoRect(boundingRect) {
     // the video vertically, only horizontally.
 
     // yOffset = (height - anticipatedHeight) / 2;
-    addDebugValue({ label: "yOffset", value: yOffset });
     actualHeight = anticipatedHeight;
     actualWidth = width;
     console.log(`1: width: ${width} height: ${height}`);
@@ -39,7 +36,6 @@ export function setVideoRect(boundingRect) {
     console.log("");
   } else if (anticipatedWidth < width) {
     xOffset = (width - anticipatedWidth) / 2;
-    addDebugValue({ label: "xOffset", value: xOffset });
     actualWidth = anticipatedWidth;
     actualHeight = height;
     console.log(`2: width: ${width} height: ${height}`);

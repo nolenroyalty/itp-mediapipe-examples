@@ -9,6 +9,7 @@ import {
   clearDebugValues,
   getFingertip,
 } from "../../utilities.js";
+import colors from "../../colors.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
@@ -87,7 +88,7 @@ function doThingsWithLandmarks({ handLandmarkResults }) {
             x: loc.x,
             y: loc.y,
             currentTime,
-            color: "#69f7be",
+            color: colors.teal,
             kind: "dot",
           });
         }

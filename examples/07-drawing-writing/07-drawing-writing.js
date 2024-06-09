@@ -9,6 +9,7 @@ import {
   clearDebugValues,
   getFingertip,
 } from "../../utilities.js";
+import colors from "../../colors.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
@@ -86,6 +87,8 @@ function drawDots({ canvas }) {
 function connectLinePoints({ canvas }) {
   const ctx = canvas.getContext("2d");
   ctx.lineWidth = 5;
+  ctx.save();
+  ctx.lineCap = "round";
   for (let i = 0; i < toDraw.linePoints.length - 1; i++) {
     ctx.beginPath();
     const { x: x1, y: y1, color: color1 } = toDraw.linePoints[i];
@@ -100,9 +103,11 @@ function connectLinePoints({ canvas }) {
     );
     ctx.stroke();
   }
+  ctx.restore();
 }
 
-function doThingsWithLandmarks({ time, handLandmarkResults }) {
+function doThingsWithLandmarks({ handLandmarkResults }) {
+  const currentTime = performance.now();
   if (handLandmarkResults) {
     const leftLoc = getFingertip({
       finger: "Index",
@@ -120,8 +125,8 @@ function doThingsWithLandmarks({ time, handLandmarkResults }) {
       addPoint({
         x: leftLoc.x,
         y: leftLoc.y,
-        currentTime: time,
-        color: "#69f7be",
+        currentTime,
+        color: colors.teal,
         kind: "dot",
       });
     }
@@ -129,12 +134,12 @@ function doThingsWithLandmarks({ time, handLandmarkResults }) {
       addPoint({
         x: rightLoc.x,
         y: rightLoc.y,
-        currentTime: time,
-        color: "#ffff00",
+        currentTime,
+        color: colors.pink,
         kind: "line",
       });
     }
-    const currentTime = performance.now();
+
     purgeOldPoints(currentTime);
     drawDots({ canvas: drawingCanvas });
     connectLinePoints({ canvas: drawingCanvas });

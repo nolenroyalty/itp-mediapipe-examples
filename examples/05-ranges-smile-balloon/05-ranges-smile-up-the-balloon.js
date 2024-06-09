@@ -42,7 +42,7 @@ function floatBalloonSmoothly({ smileScore }) {
   prevSmileScore = newSmileScore;
 }
 
-function doThingsWithLandmarks({ time, faceLandmarkResults }) {
+function doThingsWithLandmarks({ faceLandmarkResults }) {
   if (faceLandmarkResults && faceLandmarkResults.faceLandmarks) {
     const leftSmileScore = extractFacialBlendshape({
       faceLandmarkResults,

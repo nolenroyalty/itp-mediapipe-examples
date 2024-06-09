@@ -41,7 +41,7 @@ function DEBUG_indexFingerLocations(results) {
   });
 }
 
-function doThingsWithLandmarks({ time, handLandmarkResults }) {
+function doThingsWithLandmarks({ handLandmarkResults }) {
   clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas: drawingCanvas });
   if (handLandmarkResults) {
     drawHandLandmarks({ results: handLandmarkResults, canvas: drawingCanvas });

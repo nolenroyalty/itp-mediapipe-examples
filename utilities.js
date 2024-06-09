@@ -142,3 +142,74 @@ export function moveToPositionInVideo({ loc, elt }) {
   elt.style.setProperty("left", `${inVideoSpace.x}px`);
   elt.style.setProperty("top", `${inVideoSpace.y}px`);
 }
+
+function quadraticCurveThroughPoints({ path, points, width, height }) {
+  path.moveTo(points[0].x * width, points[0].y * height);
+
+  for (let i = 1; i < points.length; i++) {
+    const prevPoint = points[i - 1];
+    const currentPoint = points[i];
+    const midX = ((prevPoint.x + currentPoint.x) / 2) * width;
+    const midY = ((prevPoint.y + currentPoint.y) / 2) * height;
+    path.quadraticCurveTo(
+      prevPoint.x * width,
+      prevPoint.y * height,
+      midX,
+      midY
+    );
+  }
+  path.quadraticCurveTo(
+    points[points.length - 1].x * width,
+    points[points.length - 1].y * height,
+    points[0].x * width,
+    points[0].y * height
+  );
+  path.closePath();
+  return path;
+}
+
+export function getHandTracePath({ ctx, handLandmarkResults }) {
+  const path = new Path2D();
+  handLandmarkResults.forEach(({ landmarks, label }) => {
+    if (landmarks.length === 0) {
+      return;
+    }
+    quadraticCurveThroughPoints({
+      path,
+      points: landmarks,
+      width: ctx.canvas.width,
+      height: ctx.canvas.height,
+    });
+  });
+  return path;
+}
+
+export function maskOutPath({ ctx, path, lineWidth }) {
+  ctx.save();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  ctx.miterLimit = 2;
+
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.lineWidth = lineWidth;
+  // setting this to any color insures that we clear the canvas under the fill
+  // properly. I don't understand why
+  ctx.fillStyle = "blue";
+  ctx.stroke(path);
+  ctx.fill(path);
+  ctx.restore();
+}
+
+export function outlinePath({ ctx, outlineColor, path, lineWidth }) {
+  ctx.save();
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  ctx.miterLimit = 2;
+  ctx.strokeStyle = outlineColor;
+  ctx.fillStyle = "transparent";
+  ctx.lineWidth = lineWidth;
+  ctx.globalCompositeOperation = "source-over";
+  ctx.stroke(path);
+  ctx.restore();
+}

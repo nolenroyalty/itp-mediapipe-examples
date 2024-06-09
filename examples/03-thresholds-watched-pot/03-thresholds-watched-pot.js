@@ -51,7 +51,7 @@ function maybeBoil({ eyesClosed }) {
   }
 }
 
-function doThingsWithLandmarks({ time, faceLandmarkResults }) {
+function doThingsWithLandmarks({ faceLandmarkResults }) {
   if (faceLandmarkResults && faceLandmarkResults.faceLandmarks) {
     const closedLeftScore = extractFacialBlendshape({
       faceLandmarkResults,

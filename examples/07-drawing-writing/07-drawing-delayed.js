@@ -9,6 +9,7 @@ import {
   clearDebugValues,
   getFingertip,
 } from "../../utilities.js";
+import colors from "../../colors.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
@@ -107,17 +108,15 @@ function getDelay(finger) {
 function getColor(finger) {
   switch (finger) {
     case "Thumb":
-      return "#69f7be";
+      return colors.teal;
     case "Index":
-      return "#69c8f7";
+      return colors.blue;
     case "Middle":
-      return "#8a69f7";
+      return colors.purple;
     case "Ring":
-      return "#f769d6";
+      return colors.pink;
     case "Pinky":
-      return "#e9f769";
-    default:
-      return "#69f7be";
+      return colors.yellow;
   }
 }
 

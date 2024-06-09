@@ -144,14 +144,19 @@ async function animationFrameLoop({
   requestHandLandmarks,
   runEveryFrame,
   webcamVideo,
+  runBeforeProcessingVideoFrame,
+  handLandmarkerArguments = {},
 }) {
   const faceLandmarker = await createFaceLandmarker();
-  const handLandmarker = await createHandLandmarker();
+  const handLandmarker = await createHandLandmarker(handLandmarkerArguments);
   let lastVideoTime = -1;
-  const loop = (time) => {
+  const loop = () => {
     const startTimeMs = performance.now();
     if (lastVideoTime !== webcamVideo.currentTime) {
       let faceLandmarkResults;
+      if (runBeforeProcessingVideoFrame) {
+        runBeforeProcessingVideoFrame();
+      }
       if (requestFaceLandmarks) {
         faceLandmarkResults = faceLandmarker.detectForVideo(
           webcamVideo,
@@ -170,7 +175,7 @@ async function animationFrameLoop({
         handLandmarkResults =
           selectBestLandmarksForEachHand(handLandmarkResults);
       }
-      runEveryFrame({ time, faceLandmarkResults, handLandmarkResults });
+      runEveryFrame({ faceLandmarkResults, handLandmarkResults });
       lastVideoTime = webcamVideo.currentTime;
     }
     requestAnimationFrame(loop);
@@ -198,6 +203,7 @@ export function runForeverOnceWebcamIsEnabled({
   requestHandLandmarks,
   doThingsWithLandmarks: runEveryFrame,
   enableWebcamButton,
+  runBeforeProcessingVideoFrame,
   runOnce = null,
 } = {}) {
   if (!enableWebcamButton) {
@@ -217,6 +223,7 @@ export function runForeverOnceWebcamIsEnabled({
         requestFaceLandmarks,
         requestHandLandmarks,
         runEveryFrame,
+        runBeforeProcessingVideoFrame,
         webcamVideo,
       });
     };

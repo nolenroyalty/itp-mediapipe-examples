@@ -28,7 +28,7 @@ function DEBUG_blendshapeValues(blendShapes) {
   });
 }
 
-function doThingsWithLandmarks({ time, faceLandmarkResults }) {
+function doThingsWithLandmarks({ faceLandmarkResults }) {
   clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas: drawingCanvas });
   if (faceLandmarkResults && faceLandmarkResults.faceLandmarks) {
     drawFaceLandmarks({ results: faceLandmarkResults, canvas: drawingCanvas });

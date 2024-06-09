@@ -54,7 +54,7 @@ function movePuppet({ loc, elt }) {
   }
 }
 
-function doThingsWithLandmarks({ time, handLandmarkResults }) {
+function doThingsWithLandmarks({ handLandmarkResults }) {
   if (handLandmarkResults) {
     const leftLoc = getFingertip({
       finger: "Index",
