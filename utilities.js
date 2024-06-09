@@ -310,3 +310,7 @@ export function outlinePath({ ctx, outlineColor, path, lineWidth }) {
   ctx.stroke(path);
   ctx.restore();
 }
+
+function jitter(range = 0.1) {
+  return 1 + (Math.random() * range - range / 2);
+}

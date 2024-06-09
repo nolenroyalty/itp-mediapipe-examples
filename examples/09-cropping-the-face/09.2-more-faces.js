@@ -20,6 +20,7 @@ const drawingCanvas = document.querySelector("#drawingCanvas");
 const NUMBER_OF_FACES = 18;
 const SPEED_IN_PIXELS_PER_SECOND = 200;
 
+// available in utilities.js
 function jitter(range = 0.1) {
   return 1 + (Math.random() * range - range / 2);
 }
