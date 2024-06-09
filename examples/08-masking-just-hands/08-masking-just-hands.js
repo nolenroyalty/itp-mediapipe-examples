@@ -61,8 +61,8 @@ runForeverOnceWebcamIsEnabled({
     clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas: drawingCanvas });
   },
   handLandmarkerArguments: {
-    minDetectionConfidence: 0.2,
-    minHandPresenceConfidence: 0.3,
-    minTrackingConfidence: 0.2,
+    minDetectionConfidence: 0.6,
+    minHandPresenceConfidence: 0.6,
+    minTrackingConfidence: 0.5,
   },
 });
