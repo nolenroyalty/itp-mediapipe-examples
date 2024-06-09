@@ -5,4 +5,11 @@ export const pink = "#f769d6";
 export const yellow = "#e9f769";
 export const red = "#f76969";
 
-export default { teal, blue, purple, pink, yellow, red };
+const colors = { teal, blue, purple, pink, yellow, red };
+export default colors;
+
+export function randomColor() {
+  const colorValues = Object.values(colors);
+  const randomIndex = Math.floor(Math.random() * colorValues.length);
+  return colorValues[randomIndex];
+}
