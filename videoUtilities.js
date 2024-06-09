@@ -55,7 +55,8 @@ export function setVideoRect(boundingRect) {
 
 export function projectOntoVideoSpace({ x, y }) {
   if (!actualWidth || !actualHeight) {
-    throw new Error("ACTUAL HEIGHT OR WIDTH NOT SET");
+    console.error("ACTUAL HEIGHT OR WIDTH NOT SET");
+    return null;
   }
   const { left, top } = VIDEO_BOUNDING_RECT;
   return {

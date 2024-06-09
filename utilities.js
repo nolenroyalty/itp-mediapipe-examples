@@ -134,6 +134,9 @@ export function getFingertip({ finger, hand, handLandmarkResults }) {
 
 export function moveToPositionInVideo({ loc, elt }) {
   const inVideoSpace = projectOntoVideoSpace(loc);
+  if (!inVideoSpace) {
+    return;
+  }
   elt.style.setProperty("position", "absolute");
   elt.style.setProperty("transform", "translate(-50%, -50%)");
   elt.style.setProperty("left", `${inVideoSpace.x}px`);
