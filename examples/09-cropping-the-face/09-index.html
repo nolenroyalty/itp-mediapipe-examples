@@ -14,10 +14,16 @@
     ></script>
   </head>
   <body>
-    <script src="./08-masking-just-hands.js" type="module" defer></script>
+    <script src="./09-cropping-the-face.js" type="module" defer></script>
     <div class="wrapper">
       <div class="debug-container transparent"></div>
       <button id="enableWebcamButton">enable webcam</button>
+      <button
+        id="captureFaceButton"
+        style="position: absolute; top: 30%; left: 70%; z-index: 100"
+      >
+        capture face
+      </button>
     </div>
     <video
       class="transparent fill-most-of-page"
@@ -28,13 +34,8 @@
     ></video>
     <canvas class="fill-most-of-page" id="drawingCanvas"> </canvas>
     <div id="navLinks">
-      <a href="../07-drawing-writing/07-drawing-delayed.html"
-        >prev (delayed drawing)</a
-      >
+      <a href="../08-masking-just-hands/08-index.html">prev (just the hands)</a>
       <a href="/index.html">home</a>
-      <a href="../09-cropping-the-face/09-index.html"
-        >next (cropping the face)</a
-      >
     </div>
   </body>
 </html>

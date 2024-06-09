@@ -250,6 +250,37 @@ export function getOuterFaceTracePath({ ctx, faceLandmarkResults }) {
   });
 }
 
+export function getFaceBoundingBox({ faceLandmarkResults }) {
+  const faceLandmarks = faceLandmarkResults.faceLandmarks[0];
+  const xs = faceLandmarks.map((landmark) => landmark.x);
+  const ys = faceLandmarks.map((landmark) => landmark.y);
+  const unFlippedXMin = Math.min(...xs);
+  const unFlippedXMax = Math.max(...xs);
+  // our video is mirrored so we need to flip the x values
+  const xMin = 1 - unFlippedXMax;
+  const xMax = 1 - unFlippedXMin;
+  const yMin = Math.min(...ys);
+  const yMax = Math.max(...ys);
+  return { xMin, xMax, yMin, yMax };
+}
+
+export function cropToBoundingBox({ ctx, video, boundingBox }) {
+  const { xMin, xMax, yMin, yMax } = boundingBox;
+  const width = xMax - xMin;
+  const height = yMax - yMin;
+  ctx.drawImage(
+    video,
+    xMin * video.videoWidth,
+    yMin * video.videoHeight,
+    width * video.videoWidth,
+    height * video.videoHeight,
+    0,
+    0,
+    ctx.canvas.width,
+    ctx.canvas.height
+  );
+}
+
 export function maskOutPath({ ctx, path, lineWidth }) {
   ctx.save();
   ctx.lineCap = "round";

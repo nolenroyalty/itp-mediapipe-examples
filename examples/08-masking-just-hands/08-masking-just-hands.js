@@ -24,8 +24,8 @@ function doThingsWithLandmarks({ handLandmarkResults }) {
   if (handLandmarkResults && handLandmarkResults.length > 0) {
     ctx.save();
     ctx.fillStyle = colors.teal;
-    // try adjusting this down!
-    ctx.globalAlpha = 0.8;
+    // try adjusting this!
+    ctx.globalAlpha = 1;
     ctx.fillRect(0, 0, drawingCanvas.width, drawingCanvas.height);
     ctx.restore();
     addDebugValue({
