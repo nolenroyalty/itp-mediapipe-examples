@@ -1,5 +1,3 @@
-import { projectOntoVideoSpace } from "./videoUtilities.js";
-
 export let DEBUG = false;
 const debugContainer = document.querySelector(".debug-container");
 let DEBUG_VALUES = {};
@@ -132,15 +130,21 @@ export function getFingertip({ finger, hand, handLandmarkResults }) {
   return forHand.landmarks[tipIdx];
 }
 
-export function moveToPositionInVideo({ loc, elt }) {
-  const inVideoSpace = projectOntoVideoSpace(loc);
-  if (!inVideoSpace) {
-    return;
-  }
+// Take a position in the video feed (0 to 1) and return the actual coordinates
+// on the screen of that position. (0.5, 0.5) would be in the center of the video.
+// available in utilities.js
+export function getCoordinatesRelativeToVideo({ x, y, video }) {
+  const { x: videoX, y: videoY, width, height } = video.getBoundingClientRect();
+  return { x: videoX + x * width, y: videoY + y * height };
+}
+
+export function moveToPositionInVideo({ elt, loc, video }) {
+  const { x, y } = getCoordinatesRelativeToVideo({ x: loc.x, y: loc.y, video });
   elt.style.setProperty("position", "absolute");
-  elt.style.setProperty("transform", "translate(-50%, -50%)");
-  elt.style.setProperty("left", `${inVideoSpace.x}px`);
-  elt.style.setProperty("top", `${inVideoSpace.y}px`);
+  // We use left/top here instead of translate so that we can also center
+  // the content using translate
+  elt.style.setProperty("left", `${x}px`);
+  elt.style.setProperty("top", `${y}px`);
 }
 
 function quadraticCurveThroughPoints({ path, points, width, height }) {

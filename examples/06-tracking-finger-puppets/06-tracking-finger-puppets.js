@@ -8,7 +8,6 @@ import {
   addDebugValue,
   clearDebugValues,
   getFingertip,
-  moveToPositionInVideo,
 } from "../../utilities.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
@@ -45,10 +44,30 @@ function DEBUG_indexFingerLocations({ leftLoc, rightLoc }) {
   }
 }
 
+// The functions on touch detection might be confusing; it's ok to just use them
+// without thinking too much about how they work right now if you want!
+
+// Take a position in the video feed (0 to 1) and return the actual coordinates
+// on the screen of that position. (0.5, 0.5) would be in the center of the video.
+// available in utilities.js
+function getCoordinatesRelativeToVideo({ x, y, video }) {
+  const { x: videoX, y: videoY, width, height } = video.getBoundingClientRect();
+  return { x: videoX + x * width, y: videoY + y * height };
+}
+
+function moveToPositionInVideo({ elt, loc, video }) {
+  const { x, y } = getCoordinatesRelativeToVideo({ x: loc.x, y: loc.y, video });
+  elt.style.setProperty("position", "absolute");
+  // We use left/top here instead of translate so that we can also center
+  // the content using translate
+  elt.style.setProperty("left", `${x}px`);
+  elt.style.setProperty("top", `${y}px`);
+}
+
 function movePuppet({ loc, elt }) {
   if (loc) {
     elt.classList.remove("transparent");
-    moveToPositionInVideo({ loc, elt });
+    moveToPositionInVideo({ loc, elt, video: webcamVideo });
   } else {
     elt.classList.add("transparent");
   }

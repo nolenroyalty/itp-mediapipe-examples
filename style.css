@@ -185,6 +185,16 @@ div {
   margin: 0;
 }
 
+.finger-puppet {
+  position: absolute;
+  height: 20%;
+  width: auto;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+
 .touchable-button {
   position: absolute;
   transform: translate(-50%, -50%);
