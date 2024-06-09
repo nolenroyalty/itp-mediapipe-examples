@@ -54,7 +54,6 @@ body {
   min-height: var(--wrapper-height);
   display: grid;
   place-items: center;
-  margin: 0 1rem;
 }
 
 .content {
@@ -72,10 +71,16 @@ body {
 .fill-most-of-page {
   position: absolute;
   left: 10%;
-  width: 80%;
   top: 10%;
+  right: 10%;
   max-height: 80%;
-  object-fit: cover;
+  max-width: 80%;
+  object-fit: contain;
+  margin: 0 auto;
+  /* margin: 0 auto; */
+  /* height: 80%; */
+  /* width: 80%; */
+  /* object-fit: cover; */
 }
 
 #drawingCanvas {
@@ -91,6 +96,7 @@ body {
   transition: opacity 1s ease;
   border-radius: 8px;
   transform: scaleX(-1);
+  width: 80%;
 }
 
 #backLink {
@@ -103,6 +109,7 @@ body {
 #navLinks {
   position: absolute;
   top: 90%;
+  left: 0;
   padding-top: 0.5rem;
   width: 100%;
   display: flex;
@@ -180,4 +187,13 @@ h1 {
 
 a {
   color: var(--color-text-main);
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+div {
+  margin: 0;
 }

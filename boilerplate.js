@@ -5,6 +5,8 @@ import {
   DrawingUtils,
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
 
+import { setVideoRect } from "./videoUtilities.js";
+
 export async function createFaceLandmarker({
   numFaces = 1,
   minFaceDetectionConfidence = 0.5,
@@ -51,8 +53,16 @@ export async function createHandLandmarker({
 }
 
 export function enableCam({ webcamVideo, enableWebcamButton, runOnStart }) {
+  const constraints = {
+    video: {
+      facingMode: "user",
+      width: { ideal: 1280 },
+      height: { ideal: 720 },
+    },
+  };
+
   navigator.mediaDevices
-    .getUserMedia({ video: true })
+    .getUserMedia(constraints)
     .then(function (stream) {
       webcamVideo.srcObject = stream;
       enableWebcamButton.disabled = true;
@@ -163,8 +173,22 @@ async function animationFrameLoop({
   loop();
 }
 
+function alignCanvasWithVideo({ webcamVideo, canvas }) {
+  const align = () => {
+    const videoRect = webcamVideo.getBoundingClientRect();
+    setVideoRect(videoRect);
+    canvas.style.width = `${videoRect.width}px`;
+    canvas.style.height = `${videoRect.height}px`;
+  };
+  align();
+  window.onresize = () => {
+    align();
+  };
+}
+
 export function runForeverOnceWebcamIsEnabled({
   webcamVideo,
+  drawingCanvas,
   requestFaceLandmarks,
   requestHandLandmarks,
   doThingsWithLandmarks: runEveryFrame,
@@ -180,6 +204,10 @@ export function runForeverOnceWebcamIsEnabled({
       if (runOnce) {
         runOnce();
       }
+      if (!drawingCanvas) {
+        drawingCanvas = document.querySelector("#drawingCanvas");
+      }
+      alignCanvasWithVideo({ webcamVideo, canvas: drawingCanvas });
       animationFrameLoop({
         requestFaceLandmarks,
         requestHandLandmarks,

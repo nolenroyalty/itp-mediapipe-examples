@@ -1,3 +1,5 @@
+import { projectOntoVideoSpace } from "./videoUtilities.js";
+
 export let DEBUG = false;
 const debugContainer = document.querySelector(".debug-container");
 let DEBUG_VALUES = {};
@@ -95,4 +97,45 @@ export function removeDebugValue(key) {
   const valueEl = document.querySelector(`[data-value-for-label="${key}"]`);
   labelEl && labelEl.remove();
   valueEl && valueEl.remove();
+}
+
+const TIPS = {
+  thumb: 4,
+  index: 8,
+  middle: 12,
+  ring: 16,
+  pinky: 20,
+};
+
+// All of the landmarks can be found in this image:
+// https://ai.google.dev/static/edge/mediapipe/images/solutions/hand-landmarks.png
+export function getFingertip({ finger, hand, handLandmarkResults }) {
+  if (!handLandmarkResults || handLandmarkResults.length === 0) {
+    return null;
+  }
+
+  const tipIdx = TIPS[finger.toLowerCase()];
+  if (!tipIdx) {
+    throw new Error(`Unknown finger: ${finger}`);
+  }
+  if (hand === "left") {
+    hand = "Left";
+  }
+  if (hand === "right") {
+    hand = "Right";
+  }
+
+  const forHand = handLandmarkResults.find(({ label }) => label === hand);
+  if (!forHand) {
+    return null;
+  }
+  return forHand.landmarks[tipIdx];
+}
+
+export function moveToPositionInVideo({ loc, elt }) {
+  const inVideoSpace = projectOntoVideoSpace(loc);
+  elt.style.setProperty("position", "absolute");
+  elt.style.setProperty("transform", "translate(-50%, -50%)");
+  elt.style.setProperty("left", `${inVideoSpace.x}px`);
+  elt.style.setProperty("top", `${inVideoSpace.y}px`);
 }
