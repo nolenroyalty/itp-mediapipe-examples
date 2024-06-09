@@ -147,6 +147,20 @@ export function moveToPositionInVideo({ elt, loc, video }) {
   elt.style.setProperty("top", `${y}px`);
 }
 
+function closestPointOnRectangle({ x, y, rect }) {
+  // to find the closest point on a rectangle to a point, compare its left and right
+  // sides to the x value of the point. if the point is to the left of the rectangle,
+  // the closest point is the left side. if the point is to the right of the rectangle,
+  // the closest point is the right side. otherwise, the closest point is the x coordinate
+  // of the point (because it's between the left and right sides).
+  //
+  //  do the same for the top and bottom sides.
+  const { left, top, right, bottom } = rect;
+  const closestX = Math.max(left, Math.min(x, right));
+  const closestY = Math.max(top, Math.min(y, bottom));
+  return { x: closestX, y: closestY };
+}
+
 export function isTouching({ elt, loc, radius, video }) {
   if (!loc) {
     return false;
