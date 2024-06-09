@@ -10,7 +10,6 @@ import {
   getFingertip,
   moveToPositionInVideo,
 } from "../../utilities.js";
-import { projectOntoVideoSpace } from "../../videoUtilities.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
@@ -57,7 +56,6 @@ function movePuppet({ loc, elt }) {
 
 function doThingsWithLandmarks({ time, handLandmarkResults }) {
   if (handLandmarkResults) {
-    DEBUG_indexFingerLocations(handLandmarkResults);
     const leftLoc = getFingertip({
       finger: "Index",
       hand: "Left",
@@ -68,6 +66,7 @@ function doThingsWithLandmarks({ time, handLandmarkResults }) {
       hand: "Right",
       handLandmarkResults,
     });
+    DEBUG_indexFingerLocations(handLandmarkResults);
     movePuppet({ loc: leftLoc, elt: leftFingerPuppet });
     movePuppet({ loc: rightLoc, elt: rightFingerPuppet });
   }

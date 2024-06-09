@@ -5,7 +5,7 @@ import {
   DrawingUtils,
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision/vision_bundle.js";
 
-import { setVideoRect } from "./videoUtilities.js";
+import { setVideoRect, setAspectRatio } from "./videoUtilities.js";
 
 export async function createFaceLandmarker({
   numFaces = 1,
@@ -65,6 +65,11 @@ export function enableCam({ webcamVideo, enableWebcamButton, runOnStart }) {
     .getUserMedia(constraints)
     .then(function (stream) {
       webcamVideo.srcObject = stream;
+      const track = stream.getVideoTracks()[0];
+      const settings = track.getSettings();
+      const aspectRatio = settings.aspectRatio;
+      setAspectRatio(aspectRatio);
+
       enableWebcamButton.disabled = true;
       enableWebcamButton.textContent = "Webcam enabled";
       enableWebcamButton.classList.add("webcam-btn-success");

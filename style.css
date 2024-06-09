@@ -77,10 +77,6 @@ body {
   max-width: 80%;
   object-fit: contain;
   margin: 0 auto;
-  /* margin: 0 auto; */
-  /* height: 80%; */
-  /* width: 80%; */
-  /* object-fit: cover; */
 }
 
 #drawingCanvas {
@@ -96,7 +92,6 @@ body {
   transition: opacity 1s ease;
   border-radius: 8px;
   transform: scaleX(-1);
-  width: 80%;
 }
 
 #backLink {
