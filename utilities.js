@@ -147,6 +147,28 @@ export function moveToPositionInVideo({ elt, loc, video }) {
   elt.style.setProperty("top", `${y}px`);
 }
 
+export function isTouching({ elt, loc, radius, video }) {
+  if (!loc) {
+    return false;
+  }
+  const rect = elt.getBoundingClientRect();
+  const locInVideoSpace = getCoordinatesRelativeToVideo({
+    x: loc.x,
+    y: loc.y,
+    video,
+  });
+  const closestPoint = closestPointOnRectangle({
+    x: locInVideoSpace.x,
+    y: locInVideoSpace.y,
+    rect,
+  });
+  const distance = Math.sqrt(
+    (locInVideoSpace.x - closestPoint.x) ** 2 +
+      (locInVideoSpace.y - closestPoint.y) ** 2
+  );
+  return distance < radius;
+}
+
 function quadraticCurveThroughPoints({ path, points, width, height }) {
   path.moveTo(points[0].x * width, points[0].y * height);
 

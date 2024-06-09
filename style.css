@@ -202,6 +202,7 @@ div {
   top: 0;
   background-color: var(--color-blue);
   color: var(--color-text-main);
+  border: none;
   padding: 24px;
   font-size: 3rem;
   transition: transform 0.1s ease;
