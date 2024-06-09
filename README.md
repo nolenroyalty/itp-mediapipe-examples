@@ -13,4 +13,4 @@ If you want to play around with the examples, hit the "preview" button at the bo
 
 You can also "remix" this directly on glitch if you have an account and edit the files yourself! Either in the browser (just click on a file and change it) or, if you prefer to work locally, you can pull down the files by hitting `Tools` at the bottom and choosing one of the export options.
 
-Sorry, I don't have time to write more right now. Hope you're enjoying the workshop.
+Hope you enjoy the workshop!
