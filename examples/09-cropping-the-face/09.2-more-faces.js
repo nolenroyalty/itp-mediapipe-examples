@@ -17,7 +17,7 @@ import colors, { randomColor } from "../../colors.js";
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
-const NUMBER_OF_FACES = 18;
+const NUMBER_OF_FACES = 8;
 const SPEED_IN_PIXELS_PER_SECOND = 200;
 
 // available in utilities.js
