@@ -1,10 +1,11 @@
 import {
   clearCanvasAndAlignSizeWithVideo,
   runForeverOnceWebcamIsEnabled,
+  drawFaceLandmarks,
+  drawHandLandmarks,
 } from "../../boilerplate.js";
 import {
   enableDebugShortcut,
-  drawFaceLandmarks,
   getFingertip,
   getKnuckleBeforeFingerTip,
   addDebugValue,
@@ -34,7 +35,6 @@ runForeverOnceWebcamIsEnabled({
   doThingsWithLandmarks,
   runOnce: () => {
     clearCanvasAndAlignSizeWithVideo({ webcamVideo, canvas: drawingCanvas });
-    initializeFaceCanvases();
   },
   runBeforeProcessingVideoFrame: () => {},
 });
