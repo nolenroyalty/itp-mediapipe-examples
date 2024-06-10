@@ -44,9 +44,6 @@ function DEBUG_indexFingerLocations({ leftLoc, rightLoc }) {
   }
 }
 
-// The functions on touch detection might be confusing; it's ok to just use them
-// without thinking too much about how they work right now if you want!
-
 // Take a position in the video feed (0 to 1) and return the actual coordinates
 // on the screen of that position. (0.5, 0.5) would be in the center of the video.
 // available in utilities.js
