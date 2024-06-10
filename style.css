@@ -192,6 +192,12 @@ div {
     padding-left: 20%;
 }
 
+.home-example-playground-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 6em;
+}
+
 .home-banner {
     font-size: 2rem;
 }
