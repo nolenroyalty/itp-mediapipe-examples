@@ -185,6 +185,27 @@ div {
   margin: 0;
 }
 
+.home-link-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 20%;
+}
+
+.home-banner {
+    font-size: 2rem;
+}
+
+.home-link-display ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.home-link-display p {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
 .finger-puppet {
   position: absolute;
   height: 20%;
