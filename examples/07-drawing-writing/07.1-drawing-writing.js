@@ -9,11 +9,19 @@ import {
   clearDebugValues,
   getFingertip,
 } from "../../utilities.js";
-import colors from "../../colors.js";
+import colors, { randomColor } from "../../colors.js";
+
+// VALUES YOU CAN EASILY CHANGE
+const LIFETIME = 3000;
+const leftFingerColor = colors.teal; // look in colors.js for more
+const rightFingerColor = colors.pink;
+// something WEIRD happens if you make these both lines!
+const leftFingerKind = "dot"; // dot or line
+const rightFingerKind = "line"; // dot or line
+// END VALUES YOU CAN EASILY CHANGE
 
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
-const LIFETIME = 3000;
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
@@ -126,8 +134,8 @@ function doThingsWithLandmarks({ handLandmarkResults }) {
         x: leftLoc.x,
         y: leftLoc.y,
         currentTime,
-        color: colors.teal,
-        kind: "dot",
+        color: leftFingerColor,
+        kind: leftFingerKind,
       });
     }
     if (rightLoc) {
@@ -135,8 +143,8 @@ function doThingsWithLandmarks({ handLandmarkResults }) {
         x: rightLoc.x,
         y: rightLoc.y,
         currentTime,
-        color: colors.pink,
-        kind: "line",
+        color: rightFingerColor,
+        kind: rightFingerKind,
       });
     }
 

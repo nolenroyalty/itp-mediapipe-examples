@@ -11,9 +11,44 @@ import {
 } from "../../utilities.js";
 import colors from "../../colors.js";
 
+// VALUES YOU CAN EASILY CHANGE
+const LIFETIME = 5000;
+
+function getDelay(finger) {
+  switch (finger) {
+    case "Thumb":
+      return 0;
+    case "Index":
+      return 200;
+    case "Middle":
+      return 400;
+    case "Ring":
+      return 600;
+    case "Pinky":
+      return 800;
+    default:
+      return 0;
+  }
+}
+
+function getColor(finger) {
+  switch (finger) {
+    case "Thumb":
+      return colors.teal;
+    case "Index":
+      return colors.blue;
+    case "Middle":
+      return colors.purple;
+    case "Ring":
+      return colors.pink;
+    case "Pinky":
+      return colors.yellow;
+  }
+}
+// END VALUES YOU CAN EASILY CHANGE
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
-const LIFETIME = 5000;
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
@@ -85,38 +120,6 @@ function connectLinePoints({ currentTime, canvas }) {
       );
       ctx.stroke();
     }
-  }
-}
-
-function getDelay(finger) {
-  switch (finger) {
-    case "Thumb":
-      return 0;
-    case "Index":
-      return 200;
-    case "Middle":
-      return 400;
-    case "Ring":
-      return 600;
-    case "Pinky":
-      return 800;
-    default:
-      return 0;
-  }
-}
-
-function getColor(finger) {
-  switch (finger) {
-    case "Thumb":
-      return colors.teal;
-    case "Index":
-      return colors.blue;
-    case "Middle":
-      return colors.purple;
-    case "Ring":
-      return colors.pink;
-    case "Pinky":
-      return colors.yellow;
   }
 }
 

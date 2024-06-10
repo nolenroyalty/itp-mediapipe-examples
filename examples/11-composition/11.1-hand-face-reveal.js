@@ -16,6 +16,9 @@ import {
 } from "../../utilities.js";
 import colors from "../../colors.js";
 
+// it was very late when i wrote this code and it's not very good
+// i'm sorry
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
 

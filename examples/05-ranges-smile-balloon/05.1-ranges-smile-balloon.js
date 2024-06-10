@@ -8,11 +8,13 @@ import {
   extractFacialBlendshape,
 } from "../../utilities.js";
 
+// VALUES YOU CAN EASILY CHANGE
+const smoothingFactor = 0.075;
+// END VALUES YOU CAN EASILY CHANGE
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
 const balloon = document.querySelector("#balloon");
-
-const z = "mouthSmileLeft";
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
@@ -35,7 +37,6 @@ function floatBalloonNaively({ smileScore }) {
 
 let prevSmileScore = 0;
 function floatBalloonSmoothly({ smileScore }) {
-  const smoothingFactor = 0.075;
   const newSmileScore =
     prevSmileScore * (1 - smoothingFactor) + smileScore * smoothingFactor;
   floatBalloonNaively({ smileScore: newSmileScore });
@@ -54,6 +55,7 @@ function doThingsWithLandmarks({ faceLandmarkResults }) {
     });
     const averageSmileScore = (leftSmileScore + rightSmileScore) / 2;
     floatBalloonNaively({ smileScore: averageSmileScore });
+    // floatBalloonSmoothly({ smileScore: averageSmileScore });
     DEBUG_smileValue({ label: "Left smile", value: leftSmileScore });
     DEBUG_smileValue({ label: "Right smile", value: rightSmileScore });
     DEBUG_smileValue({ label: "Avg smile", value: averageSmileScore });

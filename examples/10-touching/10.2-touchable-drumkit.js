@@ -11,6 +11,15 @@ import {
   moveToPositionInVideo,
 } from "../../utilities.js";
 
+// VALUES YOU CAN EASILY CHANGE
+// It'd be nice to make this relative to the size of the video
+const FINGER_RADIUS = 25;
+
+// They aren't up here, but you can also hunt around for the sounds
+// that are played when the buttons are touched. There are more sounds
+// in the "sounds" folder in the root of the project.
+// END VALUES YOU CAN EASILY CHANGE
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
 const kick = document.querySelector("#kick");
@@ -21,9 +30,6 @@ const kickSound = document.querySelector("#kickAudio");
 const clapSound = document.querySelector("#clapAudio");
 const hihatSound = document.querySelector("#hihatAudio");
 const airhornSound = document.querySelector("#airhornAudio");
-
-// It'd be nice to make this relative to the size of the video
-const FINGER_RADIUS = 25;
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();

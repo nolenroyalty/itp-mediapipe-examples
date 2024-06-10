@@ -15,10 +15,13 @@ import {
 } from "../../utilities.js";
 import colors, { randomColor } from "../../colors.js";
 
-const webcamVideo = document.querySelector("#webcamVideo");
-const drawingCanvas = document.querySelector("#drawingCanvas");
+// VALUES YOU CAN EASILY CHANGE
 const NUMBER_OF_FACES = 8;
 const SPEED_IN_PIXELS_PER_SECOND = 200;
+// END VALUES YOU CAN EASILY CHANGE
+
+const webcamVideo = document.querySelector("#webcamVideo");
+const drawingCanvas = document.querySelector("#drawingCanvas");
 
 // available in utilities.js
 function jitter(range = 0.1) {

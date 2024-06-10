@@ -9,12 +9,15 @@ import {
   getFingertip,
 } from "../../utilities.js";
 
+// VALUES YOU CAN EASILY CHANGE
+// It'd be nice to make this relative to the size of the video
+const FINGER_RADIUS = 25;
+// END VALUES YOU CAN EASILY CHANGE
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
 const touchableButton = document.querySelector("#touchableButton");
 const touchingText = document.querySelector("#touchingText");
-// It'd be nice to make this relative to the size of the video
-const FINGER_RADIUS = 25;
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();

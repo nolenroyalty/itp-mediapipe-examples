@@ -8,12 +8,15 @@ import {
   extractFacialBlendshape,
 } from "../../utilities.js";
 
+// VALUES YOU CAN EASILY CHANGE
+const JAW_OPEN_THRESHOLD = 0.45;
+const JAW_CLOSED_THRESHOLD = 0.15;
+// END VALUES YOU CAN EASILY CHANGE
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
 const eatableText = document.querySelector("#eatableText");
 
-const JAW_OPEN_THRESHOLD = 0.45;
-const JAW_CLOSED_THRESHOLD = 0.15;
 let jawState = "closed";
 
 // bind ctrl-d to enable debug mode

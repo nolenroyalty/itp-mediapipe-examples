@@ -11,9 +11,12 @@ import {
 } from "../../utilities.js";
 import colors from "../../colors.js";
 
+// VALUES YOU CAN EASILY CHANGE
+const LIFETIME = 5000;
+// END VALUES YOU CAN EASILY CHANGE
+
 const webcamVideo = document.querySelector("#webcamVideo");
 const drawingCanvas = document.querySelector("#drawingCanvas");
-const LIFETIME = 5000;
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();

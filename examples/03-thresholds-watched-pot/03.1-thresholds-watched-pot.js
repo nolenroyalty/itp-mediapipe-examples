@@ -8,14 +8,16 @@ import {
   extractFacialBlendshape,
 } from "../../utilities.js";
 
-const webcamVideo = document.querySelector("#webcamVideo");
-const drawingCanvas = document.querySelector("#drawingCanvas");
-const waterPot = document.querySelector("#waterPot");
-
+// VALUES YOU CAN EASILY CHANGE
 // Properly calibrating this number is hard; faces are very different!
 // This is a good starting point for the workshop, but you should think carefully
 // about this is and do lots of testing if you're launching something into the world!
 const EYES_CLOSED_THRESHOLD = 0.45;
+// END VALUES YOU CAN EASILY CHANGE
+
+const webcamVideo = document.querySelector("#webcamVideo");
+const drawingCanvas = document.querySelector("#drawingCanvas");
+const waterPot = document.querySelector("#waterPot");
 
 // bind ctrl-d to enable debug mode
 enableDebugShortcut();
