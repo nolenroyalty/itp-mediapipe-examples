@@ -70,6 +70,17 @@ body {
   margin: 0 auto;
 }
 
+.banner-text {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  font-size: 6rem;
+  margin: 1rem;
+}
+
 #drawingCanvas {
   pointer-events: none;
 }
@@ -186,30 +197,30 @@ div {
 }
 
 .home-link-display {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding-left: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-left: 20%;
 }
 
 .home-example-playground-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 6em;
+  display: flex;
+  flex-direction: row;
+  gap: 6em;
 }
 
 .home-banner {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .home-link-display ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 .home-link-display p {
-    margin-top: 0;
-    margin-bottom: 0.5em;
+  margin-top: 0;
+  margin-bottom: 0.5em;
 }
 
 .finger-puppet {
