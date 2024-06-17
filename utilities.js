@@ -218,7 +218,7 @@ export function isTouching({ elt, loc, radius, video }) {
   return distance < radius;
 }
 
-function quadraticCurveThroughPoints({ path, points, width, height }) {
+export function quadraticCurveThroughPoints({ path, points, width, height }) {
   path.moveTo(points[0].x * width, points[0].y * height);
 
   for (let i = 1; i < points.length; i++) {
@@ -259,7 +259,7 @@ export function getHandTracePath({ ctx, handLandmarkResults }) {
   return path;
 }
 
-function getFaceTracePath({ ctx, indices, faceLandmarkResults }) {
+export function getFaceTracePath({ ctx, indices, faceLandmarkResults }) {
   const path = new Path2D();
   const faceLandmarks = faceLandmarkResults.faceLandmarks[0];
   const points = indices.map((idx) => faceLandmarks[idx]);
