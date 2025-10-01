@@ -5,6 +5,8 @@ applications using your face and hands.
 
 It was designed to be hosted on glitch, but glitch is dead now (RIP). I do some weird things here - in particular, a lot of dependencies are embedded in funny ways to make them play nicely with glitch. If you were doing this the "normal" way you'd just install your dependencies via NPM or whatever.
 
+The easiest way to run this code is just to run a simple HTTP server - maybe try `python -mhttp.server` and then navigate to the relevant URL in your browser.
+
 But anyway the point here is some common mediapipe techniques.
 
 There's not much documentation here - I apologize - since this repo is meant to be paired with a 3 hour workshop that I give live. But maybe some of the examples are still helpful to you.
